@@ -2,7 +2,7 @@ import copy
 
 
 class Data:
-    DEFAULT_VALUE = 10
+    DEFAULT_VALUE = 100
 
     def __init__(self, **kwargs):
         self.__data = kwargs
