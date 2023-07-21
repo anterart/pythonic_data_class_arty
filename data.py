@@ -27,3 +27,6 @@ class Data:
     def to_dict(self):
         return self.__internal_dict
 
+    def __repr__(self):
+        return str(self.__internal_dict)
+

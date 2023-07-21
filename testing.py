@@ -2,7 +2,7 @@ import pytest
 from data import Data
 
 
-def get_data():
+def get_dict():
     data = {
         "id": "1",
         "name": "first",
@@ -24,49 +24,53 @@ def get_attr_val(instance, keys):
     return getattr(instance, keys[0])
 
 
-@pytest.mark.parametrize("data_dict, keys, expected_val",
+def get_data_instances_with_different_initializations():
+    return [Data.from_dict(get_dict()), Data(**get_dict())]
+
+
+@pytest.mark.parametrize("data_class_instances, keys, expected_val",
                          [
                              (
-                                 get_data(),
-                                 ["id"],
-                                 "1",
+                                     get_data_instances_with_different_initializations(),
+                                     ["id"],
+                                     "1",
                              ),
                              (
-                                 get_data(),
-                                 ["metadata", "system", "size"],
-                                 10.7
+                                     get_data_instances_with_different_initializations(),
+                                     ["metadata", "system", "size"],
+                                     10.7
                              )
                          ]
                          )
-def test__get_attributes(data_dict, keys, expected_val):
-    data_class_instance = Data.from_dict(data_dict)
-    assert get_attr_val(data_class_instance, keys) == expected_val
+def test__get_attributes(data_class_instances, keys, expected_val):
+    for data_class_instance in data_class_instances:
+        assert get_attr_val(data_class_instance, keys) == expected_val
 
 
-@pytest.mark.parametrize("data_dict, attr_path",
+@pytest.mark.parametrize("data_class_instances, attr_path",
                          [
                              (
-                                 get_data(),
-                                 ['height'],
+                                     get_data_instances_with_different_initializations(),
+                                     ['height'],
                              ),
                              (
-                                 get_data(),
-                                 ['metadata', 'system', 'height']
+                                     get_data_instances_with_different_initializations(),
+                                     ['metadata', 'system', 'height']
                              )
                          ]
                          )
-def test__get_default_attr(data_dict, attr_path):
-    data_class_instance = Data.from_dict(data_dict)
-    assert get_attr_val(data_class_instance, attr_path) == Data.DEFAULT_VALUE
+def test__get_default_attr(data_class_instances, attr_path):
+    for data_class_instance in data_class_instances:
+        assert get_attr_val(data_class_instance, attr_path) == Data.DEFAULT_VALUE
 
 
-@pytest.mark.parametrize("data_dict",
+@pytest.mark.parametrize("data_class_instances",
                          [
                              (
-                                 get_data()
+                                     get_data_instances_with_different_initializations()
                              )
                          ]
                          )
-def test__to_dict(data_dict):
-    data_class_instance = Data.from_dict(data_dict)
-    assert data_class_instance.to_dict() == data_dict
+def test__to_dict(data_class_instances):
+    for data_class_instance in data_class_instances:
+        assert data_class_instance.to_dict() == get_dict()
