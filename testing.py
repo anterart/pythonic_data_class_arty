@@ -39,6 +39,21 @@ def get_data_instances_with_different_initializations():
                                      get_data_instances_with_different_initializations(),
                                      ["metadata", "system", "size"],
                                      10.7
+                             ),
+                             (
+                                     get_data_instances_with_different_initializations(),
+                                     ["batch"],
+                                     10
+                             ),
+                             (
+                                     get_data_instances_with_different_initializations(),
+                                     ["metadata", "user", "batch"],
+                                     10
+                             ),
+                             (
+                                     get_data_instances_with_different_initializations(),
+                                     ["metadata", "batch"],
+                                     10
                              )
                          ]
                          )
