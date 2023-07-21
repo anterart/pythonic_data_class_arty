@@ -60,7 +60,13 @@ def test__get_default_attr(data_dict, attr_path):
     assert get_attr_val(data_class_instance, attr_path) == Data.DEFAULT_VALUE
 
 
-
-
-
-
+@pytest.mark.parametrize("data_dict",
+                         [
+                             (
+                                 get_data()
+                             )
+                         ]
+                         )
+def test__to_dict(data_dict):
+    data_class_instance = Data.from_dict(data_dict)
+    assert data_class_instance.to_dict() == data_dict

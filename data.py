@@ -1,3 +1,5 @@
+import copy
+
 
 class Data:
     DEFAULT_VALUE = 10
@@ -12,6 +14,7 @@ class Data:
 
     @classmethod
     def from_dict(cls, d):
+        d = copy.deepcopy(d)
         new_d = Data(**d)
         new_d.__internal_dict = d
         return new_d
