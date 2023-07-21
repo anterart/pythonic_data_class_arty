@@ -1,9 +1,9 @@
 
 class Data:
-    __DEFAULT_VALUE = 10
+    DEFAULT_VALUE = 10
 
     def __init__(self, **kwargs):
-        self.data = kwargs
+        self.__data = kwargs
         self.__internal_dict = kwargs
         for k, v in kwargs.items():
             if isinstance(v, dict):
@@ -17,9 +17,9 @@ class Data:
         return new_d
 
     def __getattr__(self, name):
-        setattr(self, name, self.__DEFAULT_VALUE)
-        self.__internal_dict[name] = self.__DEFAULT_VALUE
-        return self.__DEFAULT_VALUE
+        setattr(self, name, self.DEFAULT_VALUE)
+        self.__internal_dict[name] = self.DEFAULT_VALUE
+        return self.DEFAULT_VALUE
 
     def to_dict(self):
         return self.__internal_dict

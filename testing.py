@@ -27,9 +27,9 @@ def get_attr_val(instance, keys):
 @pytest.mark.parametrize("data_dict, keys, expected_val",
                          [
                              (
-                                     get_data(),
-                                     ["id"],
-                                     "1",
+                                 get_data(),
+                                 ["id"],
+                                 "1",
                              ),
                              (
                                  get_data(),
@@ -43,17 +43,24 @@ def test__get_attributes(data_dict, keys, expected_val):
     assert get_attr_val(data_class_instance, keys) == expected_val
 
 
-@pytest.mark.parametrize("data_dict, attr_name",
+@pytest.mark.parametrize("data_dict, attr_path",
                          [
                              (
                                  get_data(),
-                                 'my_default_attr',
+                                 ['height'],
                              ),
+                             (
+                                 get_data(),
+                                 ['metadata', 'system', 'height']
+                             )
                          ]
                          )
-def test__get_default_attr(data_dict, attr_name):
+def test__get_default_attr(data_dict, attr_path):
     data_class_instance = Data.from_dict(data_dict)
-    assert get_attr_val(data_class_instance, attr_name) == Data.__DEFAULT_VALUE
+    assert get_attr_val(data_class_instance, attr_path) == Data.DEFAULT_VALUE
+
+
+
 
 
 
